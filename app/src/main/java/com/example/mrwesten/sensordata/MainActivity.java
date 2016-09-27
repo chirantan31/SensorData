@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity{
 
 
     private SensorManager mSensorManager;
-    private SensorEventListener accelListener;
+    //private SensorEventListener accelListener;
     private SensorEventListener gyroListener;
 
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity{
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        accelListener = new SensorEventListener() {
+       /* accelListener = new SensorEventListener() {
             @Override
             public void onAccuracyChanged(Sensor arg0, int arg1) {
             }
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         };
-
+*/
 
         gyroListener= new SensorEventListener() {
             @Override
@@ -55,13 +55,26 @@ public class MainActivity extends AppCompatActivity{
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
                     Log.i("GYRO",readings);
                 }
+                else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+                    //TODO: get values
+                    String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
+                    Log.i("ACCEL",readings);
+                }
+                else if (sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+                    //TODO: get values
+                    String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
+                    Log.i("ROT_VECTOR",readings);
+                }
+
 
             }
         };
 
 
-        mSensorManager.registerListener(accelListener,mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(gyroListener,mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),SensorManager.SENSOR_DELAY_GAME);
         mSensorManager.registerListener(gyroListener,mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(gyroListener,mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR),SensorManager.SENSOR_DELAY_GAME);
+
 
         }
 
