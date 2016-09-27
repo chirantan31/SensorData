@@ -7,7 +7,7 @@ public class AccValue {
     private float accX;
     private float accY;
     private float accZ;
-    AccValue(long timestamp, float accX, float accY, float accZ){
+    public AccValue(long timestamp, float accX, float accY, float accZ){
         this.timestamp = timestamp;
         this.accX = accX;
         this.accY = accY;

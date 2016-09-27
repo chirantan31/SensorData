@@ -7,7 +7,7 @@ public class GPSValue {
     private long timestamp;
     private double latitude;
     private double longitude;
-    GPSValue(long timestamp, double latitude, double longitude)
+    public GPSValue(long timestamp, double latitude, double longitude)
     {
         this.timestamp = timestamp;
         this.latitude = latitude;

@@ -16,12 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import com.example.mrwesten.sensordata.data.classes.*;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
 
+    UserSession userSession = new UserSession("chirantan31@gmail.com");
 
     private SensorManager mSensorManager;
     //private SensorEventListener accelListener;
@@ -125,16 +127,19 @@ public class MainActivity extends AppCompatActivity{
                     //TODO: get values
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
                     Log.i("GYRO",readings);
+                    userSession.GyroList.add(new GyroValue(System.currentTimeMillis(),event.values[0],event.values[1],event.values[2]));
                 }
                 else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
                     //TODO: get values
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
                     Log.i("ACCEL",readings);
+                    userSession.AccList.add(new AccValue(System.currentTimeMillis(),event.values[0],event.values[1],event.values[2]));
                 }
                 else if (sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
                     //TODO: get values
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
                     Log.i("ROT_VECTOR",readings);
+                    userSession.RotList.add(new RotValue(System.currentTimeMillis(),event.values[0],event.values[1],event.values[2]));
                 }
 
 
@@ -155,6 +160,7 @@ public class MainActivity extends AppCompatActivity{
                 // Called when a new location is found by the network location provider.
                 String readings = "Time: \t" + System.currentTimeMillis() + "\t Latitude:" + location.getLatitude() + "\t Longitude:" + location.getLongitude() + "\t ";
                 Log.i("GPS:",readings);
+                userSession.GPSList.add(new GPSValue(System.currentTimeMillis(),location.getLatitude(),location.getLongitude()));
 
             }
 

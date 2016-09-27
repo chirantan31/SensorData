@@ -13,12 +13,14 @@ public class UserSession {
     public ArrayList <GPSValue> GPSList;
     public ArrayList <AccValue> AccList;
     public ArrayList <GyroValue> GyroList;
-    UserSession(String userName)
+    public ArrayList <RotValue> RotList;
+    public UserSession(String userName)
     {
         this.userName = userName;
         GPSList=new ArrayList<GPSValue>();
         AccList=new ArrayList<AccValue>();
         GyroList=new ArrayList<GyroValue>();
+        RotList=new ArrayList<RotValue>();
 
     }
 

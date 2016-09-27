@@ -8,7 +8,7 @@ public class GyroValue {
     private float gyroX;
     private float gyroY;
     private float gyroZ;
-    GyroValue(long timestamp, float gyroX, float gyroY, float gyroZ)
+    public GyroValue(long timestamp, float gyroX, float gyroY, float gyroZ)
     {
         this.timestamp = timestamp;
         this.gyroX = gyroX;
