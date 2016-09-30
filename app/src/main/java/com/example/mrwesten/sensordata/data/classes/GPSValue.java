@@ -4,9 +4,9 @@ package com.example.mrwesten.sensordata.data.classes;
  */
 //Stores Latitude and Longitude values at respective timestamps.
 public class GPSValue {
-    private long timestamp;
-    private double latitude;
-    private double longitude;
+    public long timestamp;
+    public double latitude;
+    public double longitude;
     public GPSValue(long timestamp, double latitude, double longitude)
     {
         this.timestamp = timestamp;

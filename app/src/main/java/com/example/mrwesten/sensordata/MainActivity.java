@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.mrwesten.sensordata.data.classes.*;
 
@@ -31,7 +32,12 @@ public class MainActivity extends AppCompatActivity{
     private SensorEventListener gyroListener;
     private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
+    public TextView gpsTextView;
+    public TextView accelTextView;
+    public TextView rotVectTextView;
+    public TextView gyroTextView;
 
+    private DatabaseOperation dataSource;
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -67,6 +73,13 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        gpsTextView = (TextView) findViewById(R.id.gps_text_view);
+        gyroTextView = (TextView) findViewById(R.id.gyro_text_view);
+        rotVectTextView = (TextView) findViewById(R.id.rotvec_text_view);
+        accelTextView = (TextView) findViewById(R.id.accel_text_view);
+
+        dataSource = new DatabaseOperation(this);
+        dataSource.open();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 
@@ -126,19 +139,25 @@ public class MainActivity extends AppCompatActivity{
                 if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
                     //TODO: get values
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
-                    Log.i("GYRO",readings);
+                    String displayReading = "GYRO:\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
+                    gyroTextView.setText(displayReading);
+                   // Log.i("GYRO",readings);
                     userSession.GyroList.add(new GyroValue(System.currentTimeMillis(),event.values[0],event.values[1],event.values[2]));
                 }
                 else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
                     //TODO: get values
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
-                    Log.i("ACCEL",readings);
+                    String displayReading = "Accel:\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
+                    accelTextView.setText(displayReading);
+                    //Log.i("ACCEL",readings);
                     userSession.AccList.add(new AccValue(System.currentTimeMillis(),event.values[0],event.values[1],event.values[2]));
                 }
                 else if (sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
                     //TODO: get values
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
-                    Log.i("ROT_VECTOR",readings);
+                    String displayReading = "ROTVECTOR:\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
+                    rotVectTextView.setText(displayReading);
+                    //Log.i("ROT_VECTOR",readings);
                     userSession.RotList.add(new RotValue(System.currentTimeMillis(),event.values[0],event.values[1],event.values[2]));
                 }
 
@@ -158,9 +177,17 @@ public class MainActivity extends AppCompatActivity{
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
-                String readings = "Time: \t" + System.currentTimeMillis() + "\t Latitude:" + location.getLatitude() + "\t Longitude:" + location.getLongitude() + "\t ";
-                Log.i("GPS:",readings);
-                userSession.GPSList.add(new GPSValue(System.currentTimeMillis(),location.getLatitude(),location.getLongitude()));
+                long timestamp = System.currentTimeMillis();
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                String readings = "Time: \t" + timestamp + "\t Latitude:" + latitude + "\t Longitude:" + longitude + "\t ";
+                String displayReading = "GPS:\t Latitude:" + location.getLatitude() + "\t Longitude:" + location.getLongitude() + "\t ";
+                gpsTextView.setText(displayReading);
+                GPSValue gpsValue = new GPSValue(timestamp,latitude,longitude);
+                dataSource.createGPSRecord(gpsValue);
+                Log.i("GPS", dataSource.getAllGPSValues().toString());
+              //  Log.i("GPS:",readings);
+                userSession.GPSList.add(new GPSValue(timestamp,latitude,longitude));
 
             }
 

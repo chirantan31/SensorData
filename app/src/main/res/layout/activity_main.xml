@@ -10,6 +10,28 @@
     tools:context="com.example.mrwesten.sensordata.MainActivity">
 
     <TextView
+        android:id="@+id/gps_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+    <TextView
+        android:id="@+id/gyro_text_view"
+        android:layout_below="@id/gps_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+    <TextView
+        android:id="@+id/accel_text_view"
+        android:layout_below="@id/gyro_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+    <TextView
+        android:id="@+id/rotvec_text_view"
+        android:layout_below="@id/accel_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
