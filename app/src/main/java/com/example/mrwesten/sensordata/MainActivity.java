@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.mrwesten.sensordata.data.classes.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity{
                     String readings = "Time: \t" + System.currentTimeMillis() + "\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
                     String displayReading = "GYRO:\t Value1:" + event.values[0] + "\t Value2:" + event.values[1] + "\t Value3:" + event.values[2] + "\t ";
                     gyroTextView.setText(displayReading);
-                   // Log.i("GYRO",readings);
+                    Log.i("GYRO",readings);
                     userSession.GyroList.add(new GyroValue(System.currentTimeMillis(),event.values[0],event.values[1],event.values[2]));
                 }
                 else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
@@ -185,8 +186,12 @@ public class MainActivity extends AppCompatActivity{
                 gpsTextView.setText(displayReading);
                 GPSValue gpsValue = new GPSValue(timestamp,latitude,longitude);
                 dataSource.createGPSRecord(gpsValue);
-                Log.i("GPS", dataSource.getAllGPSValues().toString());
-              //  Log.i("GPS:",readings);
+                //List<GPSValue> gpsValues =  dataSource.getAllGPSValues();
+                //for(int i=0;i<gpsValues.size();i++) {
+                  //  Log.i("GPS", String.valueOf(gpsValues.get(i).timestamp));
+                //}
+                    //  Log.i("GPS:",readings);
+                Log.i("Values",dataSource.getAllGPSValues().toString());
                 userSession.GPSList.add(new GPSValue(timestamp,latitude,longitude));
 
             }
